@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 import authRoutes from './src/routes/authRoutes.js';
 import configurePassport from './src/passportConfig.js';
 import { PrismaClient } from '@prisma/client';
+import { PrismaSessionStore } from '@quixo3/prisma-session-store';
 
 dotenv.config();
 
@@ -14,7 +15,7 @@ export const prisma = new PrismaClient();
 
 // Configure CORS for frontend Vite dev server
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+  origin: process.env.FRONTEND_URL || 'https://dreamy-olive.vercel.app',
   credentials: true,
 }));
 
@@ -23,14 +24,22 @@ app.use(express.urlencoded({ extended: true }));
 
 // Session Setup
 app.use(session({
-  secret: process.env.SESSION_SECRET || 'super-dreamy-secret-key',
-  resave: false,
-  saveUninitialized: false,
   cookie: {
     secure: process.env.NODE_ENV === 'production',
     httpOnly: true,
     maxAge: 1000 * 60 * 60 * 24 // 1 day
-  }
+  },
+  secret: process.env.SESSION_SECRET || 'super-dreamy-secret-key',
+  resave: true,
+  saveUninitialized: true,
+  store: new PrismaSessionStore(
+    prisma,
+    {
+      checkPeriod: 2 * 60 * 1000,  // ms
+      dbRecordIdIsSessionId: true,
+      dbRecordIdFunction: undefined,
+    }
+  )
 }));
 
 // Passport Setup
@@ -46,7 +55,7 @@ app.get('/api/seed', async (req, res) => {
   try {
     const bcrypt = await import('bcrypt');
     const hashedPassword = await bcrypt.hash('admin123', 10);
-    
+
     // Create admin if not exists
     const admin = await prisma.user.upsert({
       where: { email: 'admin@gmail.com' },

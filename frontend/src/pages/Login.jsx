@@ -10,7 +10,7 @@ export default function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/auth/login`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || 'https://dreamy-9u37.onrender.com'}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
@@ -28,7 +28,7 @@ export default function Login() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[var(--color-ivory)] text-[var(--color-dark)] font-inter">
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, scale: 0.95, y: 10 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
@@ -41,8 +41,8 @@ export default function Login() {
         <form onSubmit={handleLogin} className="space-y-6">
           <div>
             <label className="block text-sm font-medium mb-2 text-gray-700">Email Address</label>
-            <input 
-              type="email" 
+            <input
+              type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[var(--color-sage)] transition-all bg-gray-50 focus:bg-white"
@@ -51,15 +51,15 @@ export default function Login() {
           </div>
           <div>
             <label className="block text-sm font-medium mb-2 text-gray-700">Password</label>
-            <input 
-              type="password" 
+            <input
+              type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[var(--color-sage)] transition-all bg-gray-50 focus:bg-white"
               required
             />
           </div>
-          <button 
+          <button
             type="submit"
             className="w-full py-4 mt-4 rounded-xl bg-[var(--color-dark)] text-[var(--color-ivory)] font-medium hover:bg-[var(--color-gold)] transition-colors duration-300 shadow-xl shadow-[var(--color-gold)]/20"
           >

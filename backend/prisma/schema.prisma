@@ -62,3 +62,10 @@ model Gallery {
   type      String   // image or video
   createdAt DateTime @default(now())
 }
+
+model Session {
+  id        String   @id
+  sid       String   @unique
+  data      String
+  expiresAt DateTime
+}

@@ -9,7 +9,7 @@ export default function Signup() {
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/auth/register`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || 'https://dreamy-9u37.onrender.com'}/api/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
@@ -31,7 +31,7 @@ export default function Signup() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[var(--color-ivory)] text-[var(--color-dark)] font-inter py-12">
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, scale: 0.95, y: 10 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
@@ -44,8 +44,8 @@ export default function Signup() {
         <form onSubmit={handleSignup} className="space-y-5">
           <div>
             <label className="block text-sm font-medium mb-2 text-gray-700">Full Name</label>
-            <input 
-              type="text" 
+            <input
+              type="text"
               name="name"
               onChange={handleChange}
               className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[var(--color-sage)] transition-all bg-gray-50 focus:bg-white"
@@ -54,8 +54,8 @@ export default function Signup() {
           </div>
           <div>
             <label className="block text-sm font-medium mb-2 text-gray-700">Email Address</label>
-            <input 
-              type="email" 
+            <input
+              type="email"
               name="email"
               onChange={handleChange}
               className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[var(--color-sage)] transition-all bg-gray-50 focus:bg-white"
@@ -64,8 +64,8 @@ export default function Signup() {
           </div>
           <div>
             <label className="block text-sm font-medium mb-2 text-gray-700">Phone Code (WhatsApp)</label>
-            <input 
-              type="tel" 
+            <input
+              type="tel"
               name="phone"
               onChange={handleChange}
               className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[var(--color-sage)] transition-all bg-gray-50 focus:bg-white"
@@ -74,15 +74,15 @@ export default function Signup() {
           </div>
           <div>
             <label className="block text-sm font-medium mb-2 text-gray-700">Password</label>
-            <input 
-              type="password" 
+            <input
+              type="password"
               name="password"
               onChange={handleChange}
               className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[var(--color-sage)] transition-all bg-gray-50 focus:bg-white"
               required
             />
           </div>
-          <button 
+          <button
             type="submit"
             className="w-full py-4 mt-6 rounded-xl bg-[var(--color-dark)] text-[var(--color-ivory)] font-medium hover:bg-[var(--color-gold)] transition-colors duration-300 shadow-xl shadow-[var(--color-gold)]/20"
           >
