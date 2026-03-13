@@ -38,6 +38,7 @@ app.use(session({
       checkPeriod: 2 * 60 * 1000,  // ms
       dbRecordIdIsSessionId: true,
       dbRecordIdFunction: undefined,
+      modelName: 'session',
     }
   )
 }));
