@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ivory: #FAF8F6;
+  --color-sage: #DAF1DE;
+  --color-blush: #F4C6CC;
+  --color-gold: #D4AF37;
+  --color-dark: #2F2F2F;
+
+  --font-playfair: "Playfair Display", serif;
+  --font-inter: "Inter", sans-serif;
+}
+
+body {
+  background-color: var(--color-ivory);
+  color: var(--color-dark);
+  font-family: var(--font-inter);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-playfair);
+}
+
+/* Premium smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}

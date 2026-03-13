@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id        String    @id @default(uuid())
+  name      String
+  email     String    @unique
+  password  String
+  phone     String?
+  role      String    @default("USER") // "USER" | "ADMIN"
+  bookings  Booking[]
+  createdAt DateTime  @default(now())
+}
+
+model Booking {
+  id          String         @id @default(uuid())
+  user        User           @relation(fields: [userId], references: [id])
+  userId      String
+  eventType   String
+  eventDate   DateTime
+  location    String
+  effects     BookingEffect[]
+  status      String         @default("NEW") // NEW, QUOTE_SENT, CONFIRMED, COMPLETED, CANCELLED
+  createdAt   DateTime       @default(now())
+}
+
+model Effect {
+  id          String         @id @default(uuid())
+  name        String         @unique
+  type        String
+  description String?
+  price       Float?
+  bookings    BookingEffect[]
+}
+
+model BookingEffect {
+  id        String  @id @default(uuid())
+  booking   Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  bookingId String
+  effect    Effect  @relation(fields: [effectId], references: [id], onDelete: Cascade)
+  effectId  String
+
+  @@unique([bookingId, effectId])
+}
+
+model Equipment {
+  id        String   @id @default(uuid())
+  name      String
+  type      String
+  quantity  Int      @default(0)
+}
+
+model Gallery {
+  id        String   @id @default(uuid())
+  url       String
+  type      String   // image or video
+  createdAt DateTime @default(now())
+}
