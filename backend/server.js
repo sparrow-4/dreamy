@@ -51,6 +51,14 @@ app.use(passport.session());
 // Routes
 app.use('/api/auth', authRoutes);
 
+app.get('/', (req, res) => {
+  res.send('Dreamy SFX Backend is Live (v1.0.1 - PG)');
+});
+
+app.get('/health', (req, res) => {
+  res.json({ status: 'up', version: '1.0.1', database: 'postgresql_configured' });
+});
+
 // Database seeding for Admin (Dev Helper)
 app.get('/api/seed', async (req, res) => {
   try {
