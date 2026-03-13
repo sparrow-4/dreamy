@@ -38,7 +38,7 @@ app.use(session({
       checkPeriod: 2 * 60 * 1000,  // ms
       dbRecordIdIsSessionId: true,
       dbRecordIdFunction: undefined,
-      modelName: 'session',
+      modelName: 'Session',
     }
   )
 }));
@@ -52,11 +52,16 @@ app.use(passport.session());
 app.use('/api/auth', authRoutes);
 
 app.get('/', (req, res) => {
-  res.send('Dreamy SFX Backend is Live (v1.0.1 - PG)');
+  res.send(`Dreamy SFX Backend is Live (v1.0.2 - PG). DB Instance: ${process.env.DATABASE_URL ? 'Configured' : 'Missing'}`);
 });
 
 app.get('/health', (req, res) => {
-  res.json({ status: 'up', version: '1.0.1', database: 'postgresql_configured' });
+  res.json({ 
+    status: 'up', 
+    version: '1.0.2', 
+    database: process.env.DATABASE_URL ? 'detected' : 'missing',
+    node_env: process.env.NODE_ENV 
+  });
 });
 
 // Database seeding for Admin (Dev Helper)
@@ -78,11 +83,13 @@ app.get('/api/seed', async (req, res) => {
     });
     res.json({ message: 'Seed complete', admin });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error('Seed error:', err);
+    res.status(500).json({ error: err.message, stack: err.stack });
   }
 });
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Using Database: ${process.env.DATABASE_URL ? 'Environment URL' : 'Fallback'}`);
 });
